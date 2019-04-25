@@ -76,7 +76,8 @@ def twitter_authenticated(request):
         temp_token = TwitterTemporaryToken.objects.get(oauth_token=oauth_token)
         data = json.loads(temp_token.request_token)
     except TwitterTemporaryToken.DoesNotExist:
-        return HttpResponse("shits cooked buddy")
+        logger.error("Temporary Token Does Not Exist")
+        return HttpResponse(status=404)
 
     # get request token from temp object
     token = oauth.Token(data['request_token']['oauth_token'],

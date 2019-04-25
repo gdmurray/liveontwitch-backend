@@ -54,7 +54,8 @@ def connect(request):
         }
         return JsonResponse(status=200, data={"auth_url": build_url(authorize_url, params)})
     except Application.DoesNotExist:
-        print("Do some error shit, no application found")
+        logger.error("No Application Found with this ID")
+        return JsonResponse(status=404, data={"message": "client with that ID does not exist"})
     # return HttpResponseRedirect(build_url(authorize_url, params))
 
 
