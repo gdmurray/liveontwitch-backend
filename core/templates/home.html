@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div>Welcome Home</div>
+    <div>{{ user.get_username }}</div>
+    <div>
+        <span>Twitter Accounts</span>
+        <div>
+            <p>No Twitter Accounts <a href="/twitter/login/">Add Twitter Account +</a></p>
+        </div>
+    </div>
+{% endblock %}

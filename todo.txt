@@ -1,0 +1,9 @@
+TODO: Inform the user it takes 2-5m for twitch to register that theyre offline
+TODO: Auto-delete old event-rows
+TODO: Verify Integrity of subscriptions with get_subscriptions in beat task
+TODO: When auto-renewing, keep track of rate-limit.. for fun (big assumption there bud)
+TODO: Add Light and Dark Mode View for Twitter
+TODO: Reset forms by putting the original state back in
+
+FRONTEND TO-DO
+TODO: Add Error handling to the User page

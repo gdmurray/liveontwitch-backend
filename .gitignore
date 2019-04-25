@@ -1,0 +1,10 @@
+frontend/
+
+__pycache__
+.env
+*.csr
+conf/certs
+roadmap.docx
+venv
+.idea
+.DS_Store
