@@ -3,18 +3,24 @@ from .models import TwitterAccount, LiveConfiguration, UsernameConfiguration, Bi
 
 
 class AuthorizedTwitterAccountSerializer(serializers.ModelSerializer):
+    active = serializers.SerializerMethodField()
+
+    def get_active(self, obj):
+        return obj.liveconfiguration.active
+
     class Meta:
         model = TwitterAccount
-        fields = ('username', 'uid')
+        fields = ('username', 'uid', 'active')
 
 
 class ProfileContentSerializer(serializers.ModelSerializer):
     """
     For processing the twitter api json response
     """
+
     class Meta:
         model = TwitterAccount
-        fields = ('name', 'verified', 'profile_image_url_https', 'description')
+        fields = ('name', 'verified', 'profile_image_url_https', 'description', 'updated')
 
 
 class UsernameConfigurationSerializer(serializers.ModelSerializer):
@@ -56,5 +62,5 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TwitterAccount
-        fields = ('name', 'username', 'uid', 'verified',
+        fields = ('name', 'username', 'uid', 'verified', 'updated',
                   'profile_image_url_https', 'config', 'description')

@@ -1,14 +1,18 @@
 from __future__ import unicode_literals
+import logging
 
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-
-from .fields import JSONField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 
+from .fields import JSONField
+from Twitter.tasks import handle_twitch_event
 
+logger = logging.getLogger(__name__)
 @python_2_unicode_compatible
 class TwitchAccount(models.Model):
     user = models.OneToOneField(
@@ -96,3 +100,11 @@ class TwitchEvent(models.Model):
     event_id = models.CharField(max_length=256, null=True, blank=True)
     action = models.CharField(choices=status_choices, max_length=15)
     created = models.DateTimeField(auto_now_add=timezone.now)
+
+
+@receiver(post_save, sender=TwitchEvent)
+def received_event(sender, instance, created, *args, **kwargs):
+    logger.error(f"RECEIVED TWITCHEVENT SAVE: created: {created}")
+    if created:
+        logger.debug("received twitchevent created event... calling async func")
+        handle_twitch_event.apply_async((instance.id,))

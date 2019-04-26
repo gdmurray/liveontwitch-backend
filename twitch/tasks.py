@@ -17,10 +17,11 @@ logger = logging.getLogger(__name__)
 
 
 @app.task
-def twitch_subscribe_webhook(uid):
+def twitch_subscribe_webhook(uid, method="subscribe"):
     """
     Creates the subscription for a twitch account when a user signs up
     :param uid: twitch uid
+    :param method: whether to unsubscribe or subscribe
     :return:
     """
     try:
@@ -42,12 +43,11 @@ def twitch_subscribe_webhook(uid):
         }
         payload = {
             "hub.callback": get_absolute_uri(settings.TWITCH_SUBSCRIPTION_CALLBACK_URL),
-            "hub.mode": "subscribe",
+            "hub.mode": method,
             "hub.topic": f"https://api.twitch.tv/helix/streams?user_id={uid}",
             "hub.lease_seconds": 864000,
             "hub.secret": settings.TWITCH_SUBSCRIPTION_KEY
         }
-        print("Using Subscription Key")
         r = requests.post(app_settings.SUBSCRIPTION_URL, data=payload, headers=headers)
         if r.status_code == 202:
             logger.info(f"Requested Sub: {account.user.username}")

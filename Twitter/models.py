@@ -25,6 +25,10 @@ class TwitterAccount(models.Model):
     description = models.TextField(max_length=600, null=True, blank=True)
     updated = models.DateTimeField(null=True, auto_now=True)
 
+    modified_name = models.TextField(max_length=140, null=True, blank=True,)
+    modified_bio = models.TextField(max_length=600, null=True, blank=True)
+    modified_hold = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = _('twitter account')
         verbose_name_plural = _('twitter accounts')

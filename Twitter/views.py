@@ -2,6 +2,7 @@ import logging
 import json
 import oauth2 as oauth
 from urllib.parse import parse_qsl
+import twitter
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
@@ -130,11 +131,52 @@ class TwitterAccounts(ListAPIView):
         qs = TwitterAccount.objects.filter(user=self.request.user)
         return qs
 
-class TwitterConfiguration(APIView):
+
+class RefreshTwitterAccountDetails(APIView):
     authentication_classes = (OAuth2Authentication,)
 
     def get(self, request, uid, *args, **kwargs):
-        qs = TwitterAccount.objects.get(user=self.request.user, uid=uid)
+        try:
+            fetch_user_info(request.user.id, uid)
+        except TwitterAccount.DoesNotExist:
+            return JsonResponse(status=404, data={"message": "This Twitter Account Does Not Exist"})
+        except OAuth2AccessToken.DoesNotExist:
+            return JsonResponse(status=403, data={"message": "Twitter Authentication Failed"})
+        except twitter.error.TwitterError as err:
+            return JsonResponse(status=500, data={"message": f"Twitter Verification failed: {err.message}"})
+        else:
+            acct = TwitterAccount.objects.get(uid=uid, user=request.user)
+            serializer = ProfileDetailSerializer(acct, many=False).data
+            return JsonResponse(status=200, data=serializer)
+
+
+class ToggleConfigurationActivity(APIView):
+    authentication_classes = (OAuth2Authentication,)
+
+    def post(self, request, uid, *args, **kwargs):
+        try:
+            twitter_account = TwitterAccount.objects.get(user=request.user, uid=uid)
+        except TwitterAccount.DoesNotExist:
+            return JsonResponse(status=404, data={"message": "This Twitter Account Does Not Exist"})
+
+        conf = twitter_account.liveconfiguration
+        conf.active = not conf.active
+        conf.save()
+        serializer = ProfileDetailSerializer(twitter_account, many=False).data
+        return JsonResponse(data=serializer)
+
+
+class TwitterConfiguration(APIView):
+    """
+    View For modifying TwitterAccountDetail
+    """
+    authentication_classes = (OAuth2Authentication,)
+
+    def get(self, request, uid, *args, **kwargs):
+        try:
+            qs = TwitterAccount.objects.get(user=request.user, uid=uid)
+        except TwitterAccount.DoesNotExist:
+            return JsonResponse(status=404, data={"message": "This Twitter Account Does Not Exist"})
         serializer = ProfileDetailSerializer(qs, many=False).data
         return JsonResponse(data=serializer)
 
@@ -168,4 +210,4 @@ class TwitterConfiguration(APIView):
             return JsonResponse(status=403, data={"message": "You Do Not Have Access or Account Doesnt Exist"})
 
         acct.delete()
-        return JsonResponse(status=202)
+        return JsonResponse(status=202, data={"message": "Account Deleted"})

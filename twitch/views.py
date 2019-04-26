@@ -22,6 +22,7 @@ from rest_framework.permissions import AllowAny
 from oauth2_provider.models import Application, AccessToken
 from oauthlib import common
 from django.utils import timezone
+from oauth2_provider.contrib.rest_framework.authentication import OAuth2Authentication
 from rest_framework.parsers import FormParser
 from rest_framework.decorators import parser_classes
 
@@ -30,6 +31,7 @@ from twitch.utils import build_url, get_absolute_uri
 from core.models import TemporaryToken
 from twitch.models import TwitchEvent, TwitchAccount, TwitchSubscription
 from .parsers import TwitchPostParser
+from .serializers import TwitchAccountDisplaySerializer
 
 logger = logging.getLogger(__name__)
 
@@ -138,7 +140,6 @@ def logout(request):
 def fetch_token(request):
     identifier = request.GET.get('identifier', None)
     application = request.GET.get('application', None)
-    print(identifier, application)
     try:
         temp = TemporaryToken.objects.get(identifier=identifier, application__client_id=application)
         data = {"token": temp.token.token}
@@ -148,10 +149,10 @@ def fetch_token(request):
         return JsonResponse(status=404, data={"message": "No Token Pair Found"})
 
 
-import json
-
-
 class TwitchSubscriptionEndpoint(APIView):
+    """
+    This Endpoint handles all responses to and from twitch
+    """
     permission_classes = (AllowAny,)
     parser_classes = (TwitchPostParser,)
 
@@ -194,6 +195,7 @@ class TwitchSubscriptionEndpoint(APIView):
 
     @csrf_exempt
     def post(self, request, *args, **kwargs):
+        logger.error("GOT A REQUEST FROM TWITCH")
         link_header = request.headers['Link']
         parsed = urlparse.urlparse(link_header.replace('<', '').replace('>', '').split(',')[-1])
         header_user_id = urlparse.parse_qs(parsed.query)['user_id'][0]
@@ -216,15 +218,33 @@ class TwitchSubscriptionEndpoint(APIView):
             logger.error("INVALID SIGNATURE")
             return HttpResponse(status=403)
 
-        event = TwitchEvent(subscription=twitch_sub, account=twitch_account, event_id=event_id)
+        twitch_event = TwitchEvent(subscription=twitch_sub, account=twitch_account, event_id=event_id)
         data = request.data['data']
+        logger.error(f"EVENT DATA: {data}")
         if len(data) > 0:
+            logger.error("GOT AN ONLINE EVENT")
             # TODO: Parse Body For More Informative User Data
             event = data[0]
             if event['type'] == "live":
-                event.action = TwitchEvent.ONLINE
+                logger.error("GOT A LIVE EVENT")
+                twitch_event.action = TwitchEvent.ONLINE
+
         else:
-            event.action = TwitchEvent.OFFLINE
-        event.save()
+            logger.error("GOT AN OFFLINE EVENT")
+            twitch_event.action = TwitchEvent.OFFLINE
+        twitch_event.save()
 
         return HttpResponse(status=200)
+
+
+class TwitchAccountInfo(APIView):
+    authentication_classes = (OAuth2Authentication,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            twitch_account = TwitchAccount.objects.get(user=request.user)
+        except TwitchAccount.DoesNotExist:
+            return JsonResponse(status=404, data={"message": "Account Not Found?"})
+        else:
+            return JsonResponse(status=200,
+                                data=TwitchAccountDisplaySerializer(twitch_account, many=False).data)

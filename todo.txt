@@ -1,9 +1,33 @@
-TODO: Inform the user it takes 2-5m for twitch to register that theyre offline
-TODO: Auto-delete old event-rows
-TODO: Verify Integrity of subscriptions with get_subscriptions in beat task
-TODO: When auto-renewing, keep track of rate-limit.. for fun (big assumption there bud)
-TODO: Add Light and Dark Mode View for Twitter
-TODO: Reset forms by putting the original state back in
 
 FRONTEND TO-DO
 TODO: Add Error handling to the User page
+TODO: Add .ico to Twitter and Twitch app
+
+TO-DO IN ORDER OF IMPORTANCE
+HIGH:
+TODO: [BACKEND] Complete auto-renew function for celery-beat
+TODO: [FRONTEND] Add Footer
+TODO: [FRONTEND] Add detail to Dashboard Twitter View
+TODO: [BACKEND] When refreshing data, check if there is an active hold
+TODO: [BACKEND + FRONTEND] Manage Holds + Alert User of Hold Consequences
+
+MEDIUM:
+TODO: [FRONTEND] Add more info to about and help and more descriptive UI
+TODO: [FRONTEND] Add Tooltips to buttons
+TODO: [FRONTEND] Add an explanation on the connect page
+TODO: [FRONTEND] Inform the user it takes 2-5m for twitch to register that theyre offline
+TODO: [BACKEND] Find a better logging solution (logz?)
+TODO: [FRONTEND] Add donation link, paypal?
+TODO: [FRONTEND] Add a set of defaults to config
+
+
+LOW:
+TODO: [FRONTEND] Set Up Beta Sign-up Link? use for promotion for alpha users.. some kind of marketable promo
+TODO: [FRONTEND] Terms of Service, link to twitter and frontend
+TODO: [FRONTEND] Push Notifications from browser (not websocket...)
+TODO: [FRONTEND] Add Light and Dark Mode View for Twitter
+TODO: [BACKEND] When auto-renewing, keep track of rate-limit.. for fun (big assumption there bud)
+TODO: [BACKEND] Auto-delete old event-rows
+TODO: [BACKEND] Unit Tests!! :(
+TODO: [FRONTEND] Have a little tips section: How to format your twitter account with your twitch url
+

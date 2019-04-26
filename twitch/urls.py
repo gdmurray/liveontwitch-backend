@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^callback/$', views.callback, name='callback_twitch'),
     url(r'^logout/$', views.logout, name='twitch_logout'),
     url(r'^subscription/callback/$', views.TwitchSubscriptionEndpoint.as_view(), name="callback_subscribe_twitch"),
+    url(r'^account/$', views.TwitchAccountInfo.as_view(), name='twitch_account_info')
 ]
