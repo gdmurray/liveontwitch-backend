@@ -59,3 +59,4 @@ def twitch_subscribe_webhook(uid, method="subscribe"):
 
         subscription.verifier = None
         subscription.save()
+

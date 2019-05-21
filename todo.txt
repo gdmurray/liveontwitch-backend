@@ -1,17 +1,18 @@
 
 FRONTEND TO-DO
-TODO: Add Error handling to the User page
-TODO: Add .ico to Twitter and Twitch app
-
 TO-DO IN ORDER OF IMPORTANCE
 HIGH:
 TODO: [BACKEND] Complete auto-renew function for celery-beat
 TODO: [FRONTEND] Add Footer
+TODO: [FRONTEND] Add Twitch Stream Info Bottom Panel...
 TODO: [FRONTEND] Add detail to Dashboard Twitter View
 TODO: [BACKEND] When refreshing data, check if there is an active hold
 TODO: [BACKEND + FRONTEND] Manage Holds + Alert User of Hold Consequences
 
 MEDIUM:
+TODO: [BACKEND] Add Readme + LICENSE (google what type of license)
+TODO: [FRONTEND] Add Error handling to the User page
+TODO: [FRONTEND] Add .ico to Twitter and Twitch app
 TODO: [FRONTEND] Add more info to about and help and more descriptive UI
 TODO: [FRONTEND] Add Tooltips to buttons
 TODO: [FRONTEND] Add an explanation on the connect page
@@ -19,6 +20,10 @@ TODO: [FRONTEND] Inform the user it takes 2-5m for twitch to register that theyr
 TODO: [BACKEND] Find a better logging solution (logz?)
 TODO: [FRONTEND] Add donation link, paypal?
 TODO: [FRONTEND] Add a set of defaults to config
+TODO: [FRONTEND] Are you sure prompt to refresh if username changed
+TODO: [FRONTEND] Widen the Settings Boxes
+TODO: [FRONTEND] Add User Settings Page (inherit settings style?)
+RE-RENDER ACTIVE
 
 
 LOW:
@@ -31,3 +36,5 @@ TODO: [BACKEND] Auto-delete old event-rows
 TODO: [BACKEND] Unit Tests!! :(
 TODO: [FRONTEND] Have a little tips section: How to format your twitter account with your twitch url
 
+EXTRA:
+READ INTO MORE DETAILED ANSIBLE

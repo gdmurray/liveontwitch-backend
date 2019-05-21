@@ -3,8 +3,11 @@ frontend/
 __pycache__
 .env
 *.csr
-conf/certs
+certs
 roadmap.docx
 venv
 .idea
 .DS_Store
+vars.yml
+ansible/group_vars
+ansible/vars

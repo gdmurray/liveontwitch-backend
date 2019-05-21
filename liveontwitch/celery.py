@@ -13,3 +13,7 @@ app = Celery('liveontwitch')
 app.config_from_object('django.conf:settings', namespace="CELERY")
 
 app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
+
+@app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):
+    pass
