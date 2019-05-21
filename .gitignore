@@ -4,6 +4,8 @@ __pycache__
 .env
 *.csr
 certs
+*.crt
+*.ca-bundle
 roadmap.docx
 venv
 .idea
