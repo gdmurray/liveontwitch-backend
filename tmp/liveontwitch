@@ -6,7 +6,7 @@ server {
 	listen 80;
 	listen [::]:80;
 
-	server_name api.liveontwitch.app;
+	server_name dev.liveontwitch.app;
 	return 301 https://$server_name$request_uri;
 }
 
@@ -16,9 +16,9 @@ server {
 
 	proxy_headers_hash_bucket_size 64;
         proxy_headers_hash_max_size 512;
-        server_name api.liveontwitch.app;
-        ssl_certificate certs/api.liveontwitch.app.chained.crt;
-        ssl_certificate_key certs/apiserver.RSA.key;
+        server_name dev.liveontwitch.app;
+        ssl_certificate /etc/letsencrypt/live/dev.liveontwitch.app/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/dev.liveontwitch.app/privkey.pem;
         ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers         HIGH:!aNULL:!MD5;
         client_max_body_size 20M;
@@ -37,7 +37,7 @@ server {
 
 	location /static {
 		autoindex on;
-		alias /home/greg/liveontwitch/staticfiles/;
+		alias /home/ubuntu/liveontwitch/staticfiles/;
 	}
 
 }

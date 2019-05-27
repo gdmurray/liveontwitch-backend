@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'Twitter',
     'twitch',
 
+    'storages',
     'rest_framework',
     'oauth2_provider',
     'corsheaders',
@@ -157,6 +158,23 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+
+AWS_STORAGE_BUCKET_NAME = 'liveontwitch-prod'
+AWS_S3_REGION_NAME = 'ca-central-1'  # e.g. us-east-2
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY", )
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", )
+
+# Tell django-storages the domain to use to refer to static files.
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
+# you run `collectstatic`).
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 SITE_URL = 'api.liveontwitch.app'
 
 TWITCH_AUTH_CLIENT_ID = os.environ.get('TWITCH_AUTH_CLIENT_ID', None)
@@ -184,3 +202,6 @@ ACCESS_TOKEN_EXPIRE_SECONDS = 86400
 CORS_ORIGIN_ALLOW_ALL = True
 
 CELERY_BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost")
+
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'

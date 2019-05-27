@@ -16,7 +16,7 @@ TODO: [FRONTEND] Add .ico to Twitter and Twitch app
 TODO: [FRONTEND] Add more info to about and help and more descriptive UI
 TODO: [FRONTEND] Add Tooltips to buttons
 TODO: [FRONTEND] Add an explanation on the connect page
-TODO: [FRONTEND] Inform the user it takes 2-5m for twitch to register that theyre offline
+TODO: [FRONTEND] Inform the user it takes 2-5m for twitch to register that they're offline
 TODO: [BACKEND] Find a better logging solution (logz?)
 TODO: [FRONTEND] Add donation link, paypal?
 TODO: [FRONTEND] Add a set of defaults to config
@@ -38,3 +38,7 @@ TODO: [FRONTEND] Have a little tips section: How to format your twitter account 
 
 EXTRA:
 READ INTO MORE DETAILED ANSIBLE
+
+CI/CD Pipeline and DevOps Automation
+Collect staticfiles, make sure to setup the virtualenv better in the script, then install and activate
+STANDARDIZE ERROR CODES

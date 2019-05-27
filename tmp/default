@@ -1,13 +1,12 @@
 upstream backend-server {
-	server localhost:8000;
+	server web:8080;
 }
 
 server {
 	listen 80;
 	listen [::]:80;
 
-	# server_name api.liveontwitch.app;
-	server_name 138.197.128.225
+	server_name api.liveontwitch.app;
 	return 301 https://$server_name$request_uri;
 }
 

@@ -1,0 +1,94 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    image: django
+    command: gunicorn -b 0.0.0.0:8080  liveontwitch.wsgi:application --env DJANGO_SETTINGS_MODULE=liveontwitch.prod --log-level info --reload
+    volumes:
+      - .:/code
+      - static_data:/usr/src/staticfiles
+    ports:
+      - "8080:8080"
+    networks:
+      - main
+    environment:
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_HOST=db
+    depends_on:
+      - db
+      - redis
+  nginx:
+    image: nginx:latest
+    networks:
+      - main
+    volumes:
+      - static_data:/usr/src/staticfiles
+      - ./conf/prod/certs:/etc/nginx/certs
+      - ./conf/prod/conf.d:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+      - "443:443"
+    expose:
+      - '80'
+      - '443'
+    links:
+      - web
+  celery:
+    build: .
+    command: celery -A liveontwitch worker -l info -E
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
+  celery-beat:
+    build: .
+    command: celery -A liveontwitch beat -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
+  db:
+    container_name: postgres
+    hostname: postgres
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_HOST=db
+    networks:
+      - main
+    ports:
+      - "5432:5432"
+    restart: on-failure
+  redis:
+    image: "redis:alpine"
+  migrations:
+    image: django
+    command: >
+      sh -c "python manage.py migrate --noinput
+      && python manage.py collectstatic --noinput"
+    volumes:
+      - .:/code
+    networks:
+      - main
+    environment:
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_HOST=db
+    depends_on:
+      - db
+networks:
+  main:
+
+volumes:
+  static_data:
+  postgres_data:
