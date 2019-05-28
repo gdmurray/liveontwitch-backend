@@ -14,6 +14,14 @@ spec:
       labels:
         pod: django
     spec:
+      initContainers:
+        - name: migrate
+          image: gdmurray/liveontwitch:$COMMIT_SHA1
+          imagePullPolicy: IfNotPresent
+          command: ["python", "manage.py", "migrate"]
+          envFrom:
+            - configMapRef:
+                name: django-config
       containers:
         - name: django
           command: ['gunicorn','-b','0.0.0.0:8080','liveontwitch.wsgi:application','--env','DJANGO_SETTINGS_MODULE=liveontwitch.prod','--log-level','info','--reload']
