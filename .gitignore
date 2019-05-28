@@ -15,3 +15,4 @@ ansible/group_vars
 ansible/vars
 staticfiles
 *-cluster-kubeconfig.yaml
+postgres-values.yaml
