@@ -20,6 +20,12 @@ mv ./kube/django/configmap.yaml.out ./kube/django/configmap.yaml
 cat ./kube/django/configmap.yaml
 
 echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
+./kubectl \
+  --kubeconfig=/dev/null \
+  --server=$KUBERNETES_SERVER \
+  --certificate-authority=cert.crt \
+  --token=$KUBERNETES_TOKEN \
+  delete job django-migrations
 
 ./kubectl \
   --kubeconfig=/dev/null \
