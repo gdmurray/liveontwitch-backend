@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: django
+          image: gdmurray/liveontwitch:$COMMIT_SHA1
+          command: ['python', 'manage.py', 'migrate']
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+
+            - name: DB_HOST
+              value: postgres-service
+      restartPolicy: Never
+  backoffLimit: 5
