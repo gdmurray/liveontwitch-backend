@@ -14,8 +14,6 @@ mv ./kube/django/deployment.yaml.out ./kube/django/deployment.yaml
 envsubst <./kube/django/job-migration.yaml >./kube/django/job-migration.yaml.out
 mv ./kube/django/job-migration.yaml.out ./kube/django/job-migration.yaml
 
-cat ./kube/django/job-miration.yaml
-
 envsubst <./kube/django/configmap.yaml >./kube/django/configmap.yaml.out
 mv ./kube/django/configmap.yaml.out ./kube/django/configmap.yaml
 
