@@ -100,7 +100,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('DB_NAME', 'liveontwitch'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'HOST': 'postgres-service',  # ,os.environ.get('DB_HOST', 'localhost'),
         'PORT': 5432,
         'USER': os.environ.get('DB_USER', 'gregmurray'),
         'PASSWORD': os.environ.get('DB_PASS', 'root'),
