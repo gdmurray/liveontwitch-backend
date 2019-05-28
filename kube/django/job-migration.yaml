@@ -11,5 +11,4 @@ spec:
         image: gdmurray/liveontwitch:$COMMIT_SHA1
         command: ["python", "manage.py", "migrate"]
       restartPolicy: Never
-      imagePullPolicy: Always
   backoffLimit: 4
