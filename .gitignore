@@ -14,3 +14,4 @@ vars.yml
 ansible/group_vars
 ansible/vars
 staticfiles
+*-cluster-kubeconfig.yaml

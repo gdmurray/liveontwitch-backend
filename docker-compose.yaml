@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3'
 
 services:
   web:
@@ -7,7 +7,6 @@ services:
     command: gunicorn -b 0.0.0.0:8080  liveontwitch.wsgi:application --env DJANGO_SETTINGS_MODULE=liveontwitch.prod --log-level info --reload
     volumes:
       - .:/code
-      - static_data:/usr/src/staticfiles
     ports:
       - "8080:8080"
     networks:
@@ -25,7 +24,6 @@ services:
     networks:
       - main
     volumes:
-      - static_data:/usr/src/staticfiles
       - ./conf/prod/certs:/etc/nginx/certs
       - ./conf/prod/conf.d:/etc/nginx/conf.d
     ports:
@@ -90,5 +88,4 @@ networks:
   main:
 
 volumes:
-  static_data:
   postgres_data:
