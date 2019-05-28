@@ -26,9 +26,10 @@ echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
   --token=$KUBERNETES_TOKEN \
   apply -f ./kube/django/
 
-./kubectl \
-  --kubeconfig=/dev/null \
-  --server=$KUBERNETES_SERVER \
-  --certificate-authority=cert.crt \
-  --token=$KUBERNETES_TOKEN \
-  apply -f ./kube/postgres/
+
+#./kubectl \
+#  --kubeconfig=/dev/null \
+#  --server=$KUBERNETES_SERVER \
+#  --certificate-authority=cert.crt \
+#  --token=$KUBERNETES_TOKEN \
+#  apply -f ./kube/postgres/
