@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: migrations
+  name: migrations
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: migrations
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - python manage.py migrate --noinput && python manage.py collectstatic --noinput
+        env:
+        - name: DB_HOST
+          value: db
+        - name: DB_NAME
+          value: postgres
+        - name: DB_PASS
+          value: postgres
+        - name: DB_USER
+          value: postgres
+        image: django
+        name: migrations
+        resources: {}
+        volumeMounts:
+        - mountPath: /code
+          name: migrations-claim0
+      restartPolicy: Always
+      volumes:
+      - name: migrations-claim0
+        persistentVolumeClaim:
+          claimName: migrations-claim0
+status: {}

@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: celery-beat
+  name: celery-beat
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: celery-beat
+    spec:
+      containers:
+      - args:
+        - celery
+        - -A
+        - liveontwitch
+        - beat
+        - -l
+        - info
+        image: celery-beat
+        name: celery-beat
+        resources: {}
+        volumeMounts:
+        - mountPath: /code
+          name: celery-beat-claim0
+      restartPolicy: Always
+      volumes:
+      - name: celery-beat-claim0
+        persistentVolumeClaim:
+          claimName: celery-beat-claim0
+status: {}
