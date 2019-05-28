@@ -30,7 +30,7 @@ spec:
                   key: password
 
             - name: DB_NAME
-              value: liveontwitch
+              value: liveontwitchdb
 
           ports:
             - containerPort: 5432
