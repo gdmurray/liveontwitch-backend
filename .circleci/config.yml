@@ -31,7 +31,7 @@ jobs:
             chmod u+x ./kubectl
       - run:
           name: Deploy Code
-          command: sh ./scripts/ci-deploy.sh
+          command: sh ./.circleci/ci-deploy.sh
 workflows:
   version: 2
   build-master:
