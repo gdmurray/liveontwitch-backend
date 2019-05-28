@@ -17,15 +17,7 @@ mv ./kube/django/job-migration.yaml.out ./kube/django/job-migration.yaml
 envsubst <./kube/django/configmap.yaml >./kube/django/configmap.yaml.out
 mv ./kube/django/configmap.yaml.out ./kube/django/configmap.yaml
 
-cat ./kube/django/configmap.yaml
-
 echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
-./kubectl \
-  --kubeconfig=/dev/null \
-  --server=$KUBERNETES_SERVER \
-  --certificate-authority=cert.crt \
-  --token=$KUBERNETES_TOKEN \
-  delete job django-migrations
 
 ./kubectl \
   --kubeconfig=/dev/null \
