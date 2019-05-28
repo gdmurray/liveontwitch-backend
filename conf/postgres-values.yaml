@@ -1,3 +1,4 @@
-postgresUser: greg
-postgresPassword: uG9Gn6TQdSBbv9FOJETFnICbdCKlp57f
-postgresDatabase: liveontwitchdb
+postgresql:
+  postgresUser: greg
+  postgresPassword: postgres
+  postgresDatabase: liveontwitchdb
