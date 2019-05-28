@@ -11,11 +11,11 @@ export COMMIT_SHA1=$COMMIT_SHA1
 envsubst <./kube/django/deployment.yaml >./kube/django/deployment.yaml.out
 mv ./kube/django/deployment.yaml.out ./kube/django/deployment.yaml
 
-envsubst <./kube/django/job-migration.yaml >./kube/django/job-migration.yaml.out
-mv ./kube/django/job-migration.yaml.out ./kube/django/job-migration.yaml
+# envsubst <./kube/django/job-migration.yaml >./kube/django/job-migration.yaml.out
+# mv ./kube/django/job-migration.yaml.out ./kube/django/job-migration.yaml
 
-# envsubst <./kube/django/configmap.yaml >./kube/django/configmap.yaml.out
-# mv ./kube/django/configmap.yaml.out ./kube/django/configmap.yaml
+envsubst <./kube/django/configmap.yaml >./kube/django/configmap.yaml.out
+mv ./kube/django/configmap.yaml.out ./kube/django/configmap.yaml
 
 echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
 
