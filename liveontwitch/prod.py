@@ -14,7 +14,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME', 'liveontwitchdb'),
         'USER': os.environ.get('DB_USER', 'greg'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'HOST': 'postgres-service',  # os.environ.get('DB_HOST', 'localhost'),
         'PORT': 5432,
         'PASSWORD': os.environ.get('DB_PASS', 'uG9Gn6TQdSBbv9FOJETFnICbdCKlp57f')
     }
