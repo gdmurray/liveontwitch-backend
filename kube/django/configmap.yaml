@@ -13,6 +13,7 @@ data:
 
   AWS_ACCESS_KEY: $AWS_ACCESS_KEY
   AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+  DB_HOST: postgres-service
 
   # DB_HOST: postgres-postgresql # This matches the name we gave the service with helm
   # DB_NAME: liveontwitchdb  # Make sure this matches the one in postgres-values.yaml
