@@ -37,7 +37,7 @@ spec:
       containers:
         - name: nginx
           image: nginx:latest
-          command: ['sh' './scripts/auto-reload-nginx.sh']
+          command: ['sh', './scripts/auto-reload-nginx.sh']
           ports:
             - containerPort: 443
             - containerPort: 80
