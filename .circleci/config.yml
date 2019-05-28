@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Remove Previous Migrate Job
           command: |
-            kubectl delete job django-migrations
+            ./kubectl delete job django-migrations
       - run:
           name: Deploy Code
           command: sh ./scripts/ci-deploy.sh
