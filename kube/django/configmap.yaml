@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: django-config
 data:
-  SECRET_KEY: $SECRET_KEY #'gw@p+foadlj(r%qg%jhim4nm%#f6i8h4tw-b!btedr^0p4_%4*'
+  SECRET_KEY: $SECRET_KEY
   TWITCH_AUTH_CLIENT_ID: $TWITCH_AUTH_CLIENT_ID
   TWITCH_AUTH_CLIENT_SECRET: $TWITCH_AUTH_CLIENT_SECRET
   TWITCH_SUBSCRIPTION_KEY: $TWITCH_SUBSCRIPTION_KEY
@@ -17,4 +17,4 @@ data:
   DB_HOST: postgres-postgresql # This matches the name we gave the service with helm
   DB_NAME: liveontwitchdb  # Make sure this matches the one in postgres-values.yaml
   DB_USER: greg  # Make sure this matches the one in postgres-values.yaml
-  DB_PASS: $DB_PASS #uG9Gn6TQdSBbv9FOJETFnICbdCKlp57f  # Make sure this matches the one in postgres-values.yaml
+  DB_PASS: $DB_PASS  # Make sure this matches the one in postgres-values.yaml

@@ -192,7 +192,7 @@ TWITTER_CLIENT_SECRET = os.environ.get("TWITTER_CLIENT_SECRET", None)
 
 SESSION_COOKIE_SECURE = False
 
-FRONTEND_URL = "https://liveontwitch.app"
+FRONTEND_URL = "http://localhost:3000"
 FRONTEND_CALLBACK = "/callback"
 
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2_provider.Application'

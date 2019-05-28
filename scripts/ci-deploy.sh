@@ -1,8 +1,8 @@
 #! /bin/bash
 set -e
 COMMIT_SHA1=$CIRCLE_SHA1
-printenv
 
+eval $(printenv | awk -F= '{ print "export " $1 }')
 export COMMIT_SHA1=$COMMIT_SHA1
 
 # since the only way for envsubst to work on files is using input/output redirection,
@@ -14,8 +14,10 @@ mv ./kube/django/deployment.yaml.out ./kube/django/deployment.yaml
 envsubst <./kube/django/job-migration.yaml >./kube/django/job-migration.yaml.out
 mv ./kube/django/job-migration.yaml.out ./kube/django/job-migration.yaml
 
-# envsubst <./kube/django/configmap.yaml >./kube/django/configmap.yaml.out
-# mv ./kube/django/configmap.yaml.out ./kube/django/configmap.yaml
+envsubst <./kube/django/configmap.yaml >./kube/django/configmap.yaml.out
+mv ./kube/django/configmap.yaml.out ./kube/django/configmap.yaml
+
+cat ./kube/django/configmap.yaml
 
 echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
 
