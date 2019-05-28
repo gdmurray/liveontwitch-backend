@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: sample-app
-          image: gdmurray/sample-app
+          image: gdmurray/sample-app:$COMMIT_SHA1
           ports:
             - containerPort: 80
               name: http
