@@ -9,20 +9,8 @@ spec:
         - name: django
           image: gdmurray/liveontwitch:$COMMIT_SHA1
           command: ['python', 'manage.py', 'migrate']
-          env:
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: user
-
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: password
-
-            - name: DB_HOST
-              value: postgres-service
+          envFrom:
+            - configMapRef:
+                name: django-config
       restartPolicy: Never
   backoffLimit: 5

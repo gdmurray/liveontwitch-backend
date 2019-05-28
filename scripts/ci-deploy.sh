@@ -1,6 +1,7 @@
 #! /bin/bash
 set -e
 COMMIT_SHA1=$CIRCLE_SHA1
+printenv
 
 export COMMIT_SHA1=$COMMIT_SHA1
 
@@ -13,6 +14,9 @@ mv ./kube/django/deployment.yaml.out ./kube/django/deployment.yaml
 envsubst <./kube/django/job-migration.yaml >./kube/django/job-migration.yaml.out
 mv ./kube/django/job-migration.yaml.out ./kube/django/job-migration.yaml
 
+# envsubst <./kube/django/configmap.yaml >./kube/django/configmap.yaml.out
+# mv ./kube/django/configmap.yaml.out ./kube/django/configmap.yaml
+
 echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
 
 ./kubectl \
@@ -20,4 +24,4 @@ echo "$KUBERNETES_CLUSTER_CERTIFICATE" | base64 --decode > cert.crt
   --server=$KUBERNETES_SERVER \
   --certificate-authority=cert.crt \
   --token=$KUBERNETES_TOKEN \
-  apply -f ./kube/
+  apply -f ./kube/ --recursive

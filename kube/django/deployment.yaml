@@ -15,32 +15,11 @@ spec:
         pod: django
     spec:
       containers:
-        - args:
-            - gunicorn
-            - -b
-            - 0.0.0.0:8080
-            - liveontwitch.wsgi:application
-            - --env
-            - DJANGO_SETTINGS_MODULE=liveontwitch.prod
-            - --log-level
-            - info
-            - --reload
-          name: django
+        - name: django
+          command: ['gunicorn','-b','0.0.0.0:8080','liveontwitch.wsgi:application','--env','DJANGO_SETTINGS_MODULE=liveontwitch.prod','--log-level','info','--reload']
           image: gdmurray/liveontwitch:$COMMIT_SHA1
           ports:
             - containerPort: 8000
-          env:
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: user
-
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: password
-
-            - name: DB_HOST
-              value: postgres-service
+          envFrom:
+            - configMapRef:
+                name: django-config
