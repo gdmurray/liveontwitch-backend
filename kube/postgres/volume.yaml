@@ -4,6 +4,7 @@ metadata:
   name: postgres-pv
   labels:
     type: local
+    name: postgres-pv
 spec:
   capacity:
     storage: 8Gi
@@ -12,3 +13,21 @@ spec:
     - ReadWriteMany
   hostPath:
     path: /data/postgres-pv
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pvc
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 8Gi
+  volumeName: postgres-pv
+  selector:
+    matchLabels:
+      name: postgres-pv

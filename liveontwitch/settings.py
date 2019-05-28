@@ -102,7 +102,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'liveontwitch'),
         'HOST': 'postgres-service',  # ,os.environ.get('DB_HOST', 'localhost'),
         'PORT': 5432,
-        'USER': os.environ.get('DB_USER', 'gregmurray'),
+        'USER': 'Z3JlZwo=',  # os.environ.get('DB_USER', 'gregmurray'),
         'PASSWORD': os.environ.get('DB_PASS', 'root'),
     }
 }

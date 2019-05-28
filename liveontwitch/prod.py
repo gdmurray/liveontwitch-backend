@@ -9,6 +9,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'redis://redis:6379'
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -19,3 +20,4 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASS', 'uG9Gn6TQdSBbv9FOJETFnICbdCKlp57f')
     }
 }
+"""
