@@ -99,11 +99,11 @@ WSGI_APPLICATION = 'liveontwitch.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME', 'liveontwitch'),
-        'HOST': 'postgres-service',  # ,os.environ.get('DB_HOST', 'localhost'),
+        'NAME': 'postgres',#os.environ.get('DB_NAME', 'liveontwitch'),
+        'HOST': 'postgres-postgresql',  # ,os.environ.get('DB_HOST', 'localhost'),
         'PORT': 5432,
-        'USER': 'Z3JlZwo=',  # os.environ.get('DB_USER', 'gregmurray'),
-        'PASSWORD': os.environ.get('DB_PASS', 'root'),
+        'USER': 'postgres',  # os.environ.get('DB_USER', 'gregmurray'),
+        'PASSWORD': 'LlEGNgq7wt' #os.environ.get('DB_PASS', 'root'),
     }
 }
 
